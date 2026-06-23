@@ -216,12 +216,13 @@ document.querySelectorAll('section').forEach(s=>io.observe(s));
 /* ---------- Countdown ---------- */
 const target=new Date('2026-06-29T19:00:00+02:00').getTime();
 const cd=document.getElementById('countdown');
+function toArabic(n){return String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
 function tick(){
   const d=target-Date.now();
   if(d<0){cd.innerHTML='<div class="muted">بدأ الحفل</div>';return;}
   const days=Math.floor(d/864e5),h=Math.floor(d%864e5/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);
-  const map=[[days,'يوم'],[h,'ساعة'],[m,'دقيقة'],[s,'ثانية']];
-  cd.innerHTML=map.map(([n,l])=>`<div class="cd-box"><div class="cd-num">${n}</div><div class="cd-lbl">${l}</div></div>`).join('');
+  const map=[[s,'ثانية'],[m,'دقيقة'],[h,'ساعة'],[days,'يوم']];
+  cd.innerHTML=map.map(([n,l])=>`<div class="cd-box"><div class="cd-num">${toArabic(n)}</div><div class="cd-lbl">${l}</div></div>`).join('');
 }
 tick();setInterval(tick,1000);
 
