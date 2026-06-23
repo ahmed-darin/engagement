@@ -40,15 +40,17 @@
     -webkit-text-size-adjust:100%;
     -webkit-tap-highlight-color:transparent;
   }
-  canvas#three{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
   canvas#confetti{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none;}
 
   /* CSS petal fallback (used if WebGL/Three.js unavailable) */
   .css-petals{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-  .css-petals i{position:absolute;top:-40px;display:block;width:14px;height:20px;border-radius:0 70% 0 70%;opacity:.55;animation:fall linear infinite;}
+  .css-petals i{position:absolute;top:-48px;display:block;width:26px;height:26px;opacity:.7;background-size:contain;background-repeat:no-repeat;background-position:center;animation:fall linear infinite;}
   @keyframes fall{
-    0%{transform:translateY(-40px) rotate(0deg);}
-    100%{transform:translateY(105vh) rotate(360deg);}
+    0%{transform:translate(0,-48px) rotate(0deg) scale(var(--sc,1));}
+    25%{transform:translate(14px,25vh) rotate(90deg) scale(var(--sc,1));}
+    50%{transform:translate(-10px,50vh) rotate(180deg) scale(var(--sc,1));}
+    75%{transform:translate(12px,75vh) rotate(270deg) scale(var(--sc,1));}
+    100%{transform:translate(0,108vh) rotate(360deg) scale(var(--sc,1));}
   }
 
   /* ---------- Intro overlay ---------- */
@@ -81,26 +83,15 @@
 
   .hero{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 0;}
 
-  /* Decorative hero frame */
-  .hero-frame{position:relative;padding:48px 34px 52px;border:1px solid rgba(200,165,87,.4);border-radius:4px;background:rgba(255,250,247,.35);backdrop-filter:blur(2px);}
-  .hero-frame::before{content:"";position:absolute;inset:7px;border:1px solid rgba(200,165,87,.25);border-radius:2px;pointer-events:none;}
-  .hero-frame .corner{position:absolute;width:22px;height:22px;color:var(--gold);pointer-events:none;}
-  .hero-frame .corner::before,.hero-frame .corner::after{content:"";position:absolute;background:currentColor;}
-  /* small corner flourish: a dot + short strokes */
-  .hero-frame .corner::before{width:7px;height:7px;border-radius:50%;background:transparent;border:1px solid currentColor;}
-  .hero-frame .corner.tl{top:-4px;left:-4px;}
-  .hero-frame .corner.tr{top:-4px;right:-4px;}
-  .hero-frame .corner.bl{bottom:-4px;left:-4px;}
-  .hero-frame .corner.br{bottom:-4px;right:-4px;}
-  .hero-frame .corner.tl::before{top:0;left:0;}
-  .hero-frame .corner.tr::before{top:0;right:0;}
-  .hero-frame .corner.bl::before{bottom:0;left:0;}
-  .hero-frame .corner.br::before{bottom:0;right:0;}
+  /* Decorative floral arch hero frame */
+  .hero-frame{position:relative;padding:92px 52px 64px;}
+  .floral-arch{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible;}
+  .hero-frame > *:not(.floral-arch){position:relative;z-index:1;}
   .ornament{color:var(--gold);font-size:2rem;line-height:1;margin-bottom:18px;opacity:.8;}
   .eyebrow{display:flex;flex-direction:column;gap:4px;align-items:center;font-family:'Reem Kufi';font-weight:500;font-size:1.15rem;letter-spacing:0;color:var(--gold-deep);margin-bottom:30px;line-height:1.7;}
   .names{font-family:'Aref Ruqaa';font-weight:700;font-size:clamp(2.8rem,11vw,4.6rem);color:var(--ink);line-height:1.25;}
   .amp{display:block;font-family:'Amiri';font-style:italic;font-size:clamp(1.6rem,6vw,2.4rem);color:var(--rose);margin:6px 0;}
-  .hero-sub{margin-top:30px;font-size:1.05rem;color:var(--ink-soft);max-width:420px;line-height:1.9;}
+  .hero-sub{margin-top:30px;font-size:1.05rem;color:var(--ink-soft);max-width:360px;line-height:1.9;}
 
   /* Hero key facts */
   .hero-facts{margin-top:36px;display:flex;flex-direction:column;gap:12px;align-items:center;}
@@ -109,8 +100,10 @@
   .btn-ic{width:18px;height:18px;flex-shrink:0;}
 
   /* Scroll cue */
-  .scroll-cue{margin-top:42px;display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--gold-deep);font-family:'Reem Kufi';font-size:.95rem;animation:bob 2s ease-in-out infinite;}
-  .scroll-cue .chev{width:22px;height:22px;}
+  .scroll-cue{position:relative;z-index:5;margin-top:42px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--gold-deep);font-family:'Reem Kufi';font-size:1.02rem;font-weight:500;padding:10px 22px;border:1px solid rgba(169,132,47,.35);border-radius:50px;background:rgba(255,250,247,.7);box-shadow:0 4px 16px -8px rgba(169,132,47,.45);cursor:pointer;transition:background .2s,transform .2s;}
+  .scroll-cue:hover{background:rgba(255,250,247,.95);transform:translateY(2px);}
+  .scroll-cue .chev-wrap{display:block;animation:bob 1.8s ease-in-out infinite;}
+  .scroll-cue .chev{width:24px;height:24px;display:block;}
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
 
   /* Fixed summary bar */
@@ -153,16 +146,16 @@
   @media(max-width:600px){
     .wrap{padding:0 18px;}
     .hero{padding:36px 0;}
-    .hero-frame{padding:30px 22px 32px;}
+    .hero-frame{padding:72px 34px 50px;}
     .bismillah{font-size:1.05rem;margin-bottom:18px;}
     .ornament{font-size:1.6rem;margin-bottom:12px;}
     .eyebrow{font-size:1rem;letter-spacing:0;margin-bottom:16px;gap:3px;}
     .names{line-height:1.15;}
     .amp{margin:2px 0;}
-    .hero-sub{font-size:.92rem;margin-top:16px;padding:0 6px;line-height:1.7;}
+    .hero-sub{font-size:.9rem;margin-top:16px;padding:0 10px;line-height:1.7;}
     .hero-facts{margin-top:20px;gap:8px;}
     .fact{font-size:.92rem;padding:8px 14px;}
-    .scroll-cue{margin-top:20px;font-size:.88rem;}
+    .scroll-cue{margin-top:22px;font-size:.95rem;padding:9px 20px;}
     .summary-bar{gap:8px;font-size:.88rem;padding:11px 12px;}
     .card{padding:38px 22px;margin:26px 0;border-radius:20px;}
     .card h2{font-size:1.6rem;}
@@ -192,7 +185,6 @@
 </style>
 </head>
 <body>
-<canvas id="three"></canvas>
 <div class="css-petals" id="cssPetals" aria-hidden="true"></div>
 <canvas id="confetti"></canvas>
 
@@ -219,8 +211,124 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-frame">
-      <span class="corner tl"></span><span class="corner tr"></span>
-      <span class="corner bl"></span><span class="corner br"></span>
+      <svg class="floral-arch" viewBox="0 0 380 580" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <style>
+            .fa-stem{stroke:#9c7e3e;stroke-width:1;fill:none;stroke-linecap:round;}
+            .fa-stem2{stroke:#a98a52;stroke-width:.8;fill:none;stroke-linecap:round;}
+            .fa-vine{stroke:#b59a55;stroke-width:1.2;fill:none;stroke-linecap:round;opacity:.5;}
+            .fa-leaf{fill:#bda36e;opacity:.9;}
+            .fa-leaf2{fill:#d3c293;opacity:.75;}
+            .fa-leafg{fill:#a9b07a;opacity:.8;}
+            .fa-pet{fill:#ecccc8;}
+            .fa-pet2{fill:#d99a9a;}
+            .fa-pet3{fill:#e7d09a;}
+            .fa-ctr{fill:#a9842f;}
+            .fa-lav{fill:#c2a0c8;opacity:.85;}
+          </style>
+          <g id="fa-flower">
+            <ellipse class="fa-pet" cx="0" cy="-5" rx="2.7" ry="4.2"/>
+            <ellipse class="fa-pet" cx="4.9" cy="-1.5" rx="2.7" ry="4.2" transform="rotate(72 4.9 -1.5)"/>
+            <ellipse class="fa-pet" cx="3" cy="4.1" rx="2.7" ry="4.2" transform="rotate(144 3 4.1)"/>
+            <ellipse class="fa-pet" cx="-3" cy="4.1" rx="2.7" ry="4.2" transform="rotate(216 -3 4.1)"/>
+            <ellipse class="fa-pet" cx="-4.9" cy="-1.5" rx="2.7" ry="4.2" transform="rotate(288 -4.9 -1.5)"/>
+            <circle class="fa-ctr" cx="0" cy="0" r="2"/>
+          </g>
+          <g id="fa-flowerR">
+            <ellipse class="fa-pet2" cx="0" cy="-4" rx="2.3" ry="3.5"/>
+            <ellipse class="fa-pet2" cx="3.9" cy="-1.2" rx="2.3" ry="3.5" transform="rotate(72 3.9 -1.2)"/>
+            <ellipse class="fa-pet2" cx="2.4" cy="3.3" rx="2.3" ry="3.5" transform="rotate(144 2.4 3.3)"/>
+            <ellipse class="fa-pet2" cx="-2.4" cy="3.3" rx="2.3" ry="3.5" transform="rotate(216 -2.4 3.3)"/>
+            <ellipse class="fa-pet2" cx="-3.9" cy="-1.2" rx="2.3" ry="3.5" transform="rotate(288 -3.9 -1.2)"/>
+            <circle class="fa-ctr" cx="0" cy="0" r="1.6"/>
+          </g>
+          <g id="fa-flowerY">
+            <ellipse class="fa-pet3" cx="0" cy="-3.4" rx="2" ry="3"/>
+            <ellipse class="fa-pet3" cx="3.3" cy="-1" rx="2" ry="3" transform="rotate(72 3.3 -1)"/>
+            <ellipse class="fa-pet3" cx="2" cy="2.8" rx="2" ry="3" transform="rotate(144 2 2.8)"/>
+            <ellipse class="fa-pet3" cx="-2" cy="2.8" rx="2" ry="3" transform="rotate(216 -2 2.8)"/>
+            <ellipse class="fa-pet3" cx="-3.3" cy="-1" rx="2" ry="3" transform="rotate(288 -3.3 -1)"/>
+            <circle class="fa-ctr" cx="0" cy="0" r="1.4"/>
+          </g>
+          <g id="fa-sprig">
+            <path class="fa-stem" d="M0 0 q7 -13 5 -32"/>
+            <ellipse class="fa-leaf" cx="4" cy="-6" rx="2.5" ry="5.4" transform="rotate(38 4 -6)"/>
+            <ellipse class="fa-leaf2" cx="0.5" cy="-12" rx="2.3" ry="5" transform="rotate(-22 0.5 -12)"/>
+            <ellipse class="fa-leaf" cx="4.5" cy="-18" rx="2.3" ry="5" transform="rotate(42 4.5 -18)"/>
+            <ellipse class="fa-leaf2" cx="2.5" cy="-24" rx="2.1" ry="4.4" transform="rotate(-12 2.5 -24)"/>
+            <ellipse class="fa-leaf" cx="4" cy="-29" rx="1.9" ry="4" transform="rotate(30 4 -29)"/>
+          </g>
+          <g id="fa-green">
+            <path class="fa-stem2" d="M0 0 q-6 -12 -4 -28"/>
+            <ellipse class="fa-leafg" cx="-4" cy="-6" rx="2.2" ry="4.8" transform="rotate(-38 -4 -6)"/>
+            <ellipse class="fa-leafg" cx="-1" cy="-12" rx="2" ry="4.4" transform="rotate(20 -1 -12)"/>
+            <ellipse class="fa-leafg" cx="-4.5" cy="-17" rx="2" ry="4.4" transform="rotate(-42 -4.5 -17)"/>
+            <ellipse class="fa-leafg" cx="-2" cy="-23" rx="1.8" ry="4" transform="rotate(12 -2 -23)"/>
+          </g>
+          <g id="fa-lav">
+            <path class="fa-stem2" d="M0 0 v-26"/>
+            <circle class="fa-lav" cx="0" cy="-24" r="1.9"/>
+            <circle class="fa-lav" cx="-2.1" cy="-20" r="1.9"/>
+            <circle class="fa-lav" cx="2.1" cy="-20" r="1.9"/>
+            <circle class="fa-lav" cx="-2.1" cy="-15" r="1.9"/>
+            <circle class="fa-lav" cx="2.1" cy="-15" r="1.9"/>
+            <circle class="fa-lav" cx="0" cy="-10" r="1.9"/>
+          </g>
+        </defs>
+        <path class="fa-vine" d="M48 560 L48 158 Q48 36 190 36 Q332 36 332 158 L332 560"/>
+        <use href="#fa-green" x="150" y="66" transform="rotate(-25 150 66)"/>
+        <use href="#fa-sprig" x="158" y="58" transform="rotate(-18 158 58)"/>
+        <use href="#fa-sprig" x="222" y="58" transform="rotate(18 222 58)"/>
+        <use href="#fa-green" x="230" y="66" transform="rotate(25 230 66)"/>
+        <use href="#fa-lav" x="178" y="50"/>
+        <use href="#fa-lav" x="202" y="50"/>
+        <use href="#fa-flower" x="190" y="46"/>
+        <use href="#fa-flowerR" x="172" y="56"/>
+        <use href="#fa-flowerR" x="208" y="56"/>
+        <use href="#fa-flowerY" x="184" y="62"/>
+        <use href="#fa-flowerY" x="197" y="62"/>
+        <use href="#fa-flower" x="160" y="66"/>
+        <use href="#fa-flower" x="220" y="66"/>
+        <use href="#fa-sprig" x="56" y="130" transform="rotate(-12 56 130)"/>
+        <use href="#fa-green" x="48" y="160" transform="rotate(-8 48 160)"/>
+        <use href="#fa-sprig" x="50" y="190"/>
+        <use href="#fa-lav" x="66" y="112"/>
+        <use href="#fa-flower" x="54" y="126"/>
+        <use href="#fa-flowerR" x="66" y="140"/>
+        <use href="#fa-flowerY" x="50" y="152"/>
+        <use href="#fa-flower" x="48" y="178"/>
+        <use href="#fa-flowerR" x="58" y="192"/>
+        <use href="#fa-sprig" x="324" y="130" transform="rotate(12 324 130)"/>
+        <use href="#fa-green" x="332" y="160" transform="rotate(8 332 160)"/>
+        <use href="#fa-sprig" x="330" y="190"/>
+        <use href="#fa-lav" x="314" y="112"/>
+        <use href="#fa-flower" x="326" y="126"/>
+        <use href="#fa-flowerR" x="314" y="140"/>
+        <use href="#fa-flowerY" x="330" y="152"/>
+        <use href="#fa-flower" x="332" y="178"/>
+        <use href="#fa-flowerR" x="322" y="192"/>
+        <use href="#fa-green" x="48" y="270" transform="rotate(-10 48 270)"/>
+        <use href="#fa-flower" x="48" y="258"/>
+        <use href="#fa-sprig" x="332" y="290" transform="rotate(10 332 290)"/>
+        <use href="#fa-flowerR" x="332" y="278"/>
+        <use href="#fa-flowerY" x="48" y="360"/>
+        <use href="#fa-green" x="332" y="380" transform="rotate(8 332 380)"/>
+        <use href="#fa-flower" x="332" y="368"/>
+        <use href="#fa-sprig" x="48" y="430" transform="rotate(-8 48 430)"/>
+        <use href="#fa-flowerR" x="48" y="418"/>
+        <use href="#fa-sprig" x="56" y="540" transform="rotate(165 56 540)"/>
+        <use href="#fa-green" x="64" y="555" transform="rotate(195 64 555)"/>
+        <use href="#fa-lav" x="66" y="560" transform="rotate(180 66 560)"/>
+        <use href="#fa-flower" x="52" y="544"/>
+        <use href="#fa-flowerR" x="66" y="556"/>
+        <use href="#fa-flowerY" x="56" y="566"/>
+        <use href="#fa-sprig" x="324" y="540" transform="rotate(195 324 540)"/>
+        <use href="#fa-green" x="316" y="555" transform="rotate(165 316 555)"/>
+        <use href="#fa-lav" x="314" y="560" transform="rotate(180 314 560)"/>
+        <use href="#fa-flower" x="328" y="544"/>
+        <use href="#fa-flowerR" x="314" y="556"/>
+        <use href="#fa-flowerY" x="324" y="566"/>
+      </svg>
       <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
       <div class="ornament">۞</div>
       <div class="eyebrow"><span>بكل فرحٍ وسرور</span><span>ندعوكم لحضور حفل خطوبة</span></div>
@@ -241,9 +349,9 @@
         <span>فيلا روز — المعادي، القاهرة</span>
       </div>
     </div>
-    <a href="#date" class="scroll-cue" aria-label="مرّر لأسفل لرؤية التفاصيل">
+    <a href="#date" id="scrollCue" class="scroll-cue" aria-label="مرّر لأسفل لرؤية التفاصيل">
       <span>التفاصيل بالأسفل</span>
-      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="chev-wrap"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
     </a>
   </section>
 
@@ -274,7 +382,6 @@
   <p class="sig">أحمد & دارين</p>
 </footer>
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ---------- Reveal on scroll ---------- */
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.18});
@@ -309,81 +416,68 @@ tick();setInterval(tick,1000);
 function startCssPetals(){
   const box=document.getElementById('cssPetals');
   if(box.dataset.on)return;box.dataset.on='1';
-  const cols=['#e8c4c0','#dcc38a','#f6e2e0','#d99a9a','#c8a557'];
+  // petal/center color pairs (bloom, center)
+  const flowers=[
+    ['#e8c4c0','#a9842f'],
+    ['#dcc38a','#a9842f'],
+    ['#f6e2e0','#d99a9a'],
+    ['#d99a9a','#a9842f'],
+    ['#c8a557','#7a5e22']
+  ];
+  // build an SVG flower data-URI for a given color pair
+  const flowerSVG=(pet,ctr)=>{
+    const svg=
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 24 24">'+
+      '<g fill="'+pet+'">'+
+      '<ellipse cx="0" cy="-6" rx="3.4" ry="5.4"/>'+
+      '<ellipse cx="5.7" cy="-1.9" rx="3.4" ry="5.4" transform="rotate(72 5.7 -1.9)"/>'+
+      '<ellipse cx="3.5" cy="4.9" rx="3.4" ry="5.4" transform="rotate(144 3.5 4.9)"/>'+
+      '<ellipse cx="-3.5" cy="4.9" rx="3.4" ry="5.4" transform="rotate(216 -3.5 4.9)"/>'+
+      '<ellipse cx="-5.7" cy="-1.9" rx="3.4" ry="5.4" transform="rotate(288 -5.7 -1.9)"/>'+
+      '</g><circle cx="0" cy="0" r="2.6" fill="'+ctr+'"/></svg>';
+    return "url('data:image/svg+xml,"+encodeURIComponent(svg)+"')";
+  };
   const n=innerWidth<600?16:24;
   let html='';
   for(let i=0;i<n;i++){
-    const left=Math.random()*100,dur=7+Math.random()*7,delay=-Math.random()*14,sc=.7+Math.random()*1.1;
-    html+=`<i style="left:${left}%;background:${cols[i%cols.length]};animation-duration:${dur}s;animation-delay:${delay}s;transform:scale(${sc})"></i>`;
+    const f=flowers[i%flowers.length];
+    const left=Math.random()*100,dur=8+Math.random()*8,delay=-Math.random()*16,sc=(.55+Math.random()*.85).toFixed(2);
+    html+=`<i style="left:${left}%;background-image:${flowerSVG(f[0],f[1])};animation-duration:${dur}s;animation-delay:${delay}s;--sc:${sc}"></i>`;
   }
   box.innerHTML=html;
 }
-
-/* ---------- Three.js ambient florals (subtle, optional) ---------- */
-let scene,cam,renderer,petals=[];
-function initThree(){
-  try{
-    if(typeof THREE==='undefined')throw new Error('three not loaded');
-    const cv=document.getElementById('three');
-    renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
-    renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<600?1.5:2));
-    renderer.setSize(innerWidth,innerHeight);
-    scene=new THREE.Scene();
-    cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
-    cam.position.z=14;
-    scene.add(new THREE.AmbientLight(0xffffff,.9));
-    const dir=new THREE.DirectionalLight(0xffe9d6,.6);dir.position.set(3,5,6);scene.add(dir);
-    const colors=[0xe8c4c0,0xdcc38a,0xf6e2e0,0xd99a9a,0xc8a557];
-    const petalShape=new THREE.Shape();
-    petalShape.moveTo(0,0);
-    petalShape.bezierCurveTo(.4,.5,.4,1.2,0,1.6);
-    petalShape.bezierCurveTo(-.4,1.2,-.4,.5,0,0);
-    const geo=new THREE.ShapeGeometry(petalShape);
-    const isMobile=innerWidth<600;
-    const petalCount=isMobile?20:26;
-    for(let i=0;i<petalCount;i++){
-      const mat=new THREE.MeshStandardMaterial({color:colors[i%colors.length],transparent:true,opacity:.55,side:THREE.DoubleSide,roughness:.6});
-      const m=new THREE.Mesh(geo,mat);
-      const s=.5+Math.random()*1.1;m.scale.set(s,s,s);
-      m.position.set((Math.random()-.5)*26,(Math.random()-.5)*22,(Math.random()-.5)*8-2);
-      m.rotation.z=Math.random()*Math.PI*2;
-      const spBase=isMobile?.0035:.002;
-      m.userData={sp:spBase+Math.random()*.004,rot:(Math.random()-.5)*.01,sway:Math.random()*Math.PI*2};
-      petals.push(m);scene.add(m);
-    }
-    animate();
-  }catch(e){
-    // WebGL unsupported or Three.js failed to load — use CSS petals instead
-    startCssPetals();
-  }
-}
-function animate(){
-  requestAnimationFrame(animate);
-  const t=Date.now()*.001;
-  petals.forEach(p=>{
-    p.position.y-=p.userData.sp*4;
-    p.position.x+=Math.sin(t+p.userData.sway)*.004;
-    p.rotation.z+=p.userData.rot;
-    if(p.position.y<-12){p.position.y=12;p.position.x=(Math.random()-.5)*26;}
-  });
-  renderer.render(scene,cam);
-}
-addEventListener('resize',()=>{if(!renderer)return;cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 
 /* ---------- Confetti ---------- */
 function confetti(){
   const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');
   cv.width=innerWidth;cv.height=innerHeight;
-  const cols=['#c8a557','#e8c4c0','#dcc38a','#d99a9a','#f6e2e0','#a9842f'];
+  // bloom + center color pairs
+  const cols=[['#e8c4c0','#a9842f'],['#dcc38a','#a9842f'],['#d99a9a','#a9842f'],['#f6e2e0','#d99a9a'],['#c8a557','#7a5e22']];
+  // draw a small 5-petal flower at the canvas origin, radius ~r
+  function drawFlower(ctx,r,pet,ctr){
+    for(let k=0;k<5;k++){
+      const a=k*(Math.PI*2/5);
+      ctx.save();ctx.rotate(a);
+      ctx.fillStyle=pet;
+      ctx.beginPath();
+      ctx.ellipse(0,-r*0.62,r*0.42,r*0.66,0,0,Math.PI*2);
+      ctx.fill();ctx.restore();
+    }
+    ctx.fillStyle=ctr;
+    ctx.beginPath();ctx.arc(0,0,r*0.3,0,Math.PI*2);ctx.fill();
+  }
   let parts=[];
-  const count=innerWidth<600?100:160;
-  for(let i=0;i<count;i++)parts.push({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*16,vy:Math.random()*-15-4,g:.3+Math.random()*.2,s:5+Math.random()*7,c:cols[i%cols.length],r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,life:1});
+  const count=innerWidth<600?70:110;
+  for(let i=0;i<count;i++){
+    const cp=cols[i%cols.length];
+    parts.push({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*16,vy:Math.random()*-15-4,g:.3+Math.random()*.2,s:6+Math.random()*6,c:cp[0],c2:cp[1],r:Math.random()*Math.PI,vr:(Math.random()-.5)*.2,life:1});
+  }
   let frame=0;
   (function run(){
     ctx.clearRect(0,0,cv.width,cv.height);
     parts.forEach(p=>{p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life-=.006;
       ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.globalAlpha=Math.max(p.life,0);
-      ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.5);ctx.restore();});
+      drawFlower(ctx,p.s,p.c,p.c2);ctx.restore();});
     frame++;
     if(frame<260)requestAnimationFrame(run);else ctx.clearRect(0,0,cv.width,cv.height);
   })();
@@ -396,14 +490,21 @@ function openInvite(){
   document.getElementById('hero').classList.add('in');
   // visuals run independently and can never block opening
   setTimeout(()=>{ try{ confetti(); }catch(e){} },350);
-  setTimeout(()=>{
-    if(typeof THREE!=='undefined'){ initThree(); }
-    else { startCssPetals(); }
-  },50);
+  setTimeout(()=>{ startCssPetals(); },50);
 }
 const ob=document.getElementById('openBtn');
 ob.addEventListener('click',openInvite);
 ob.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openInvite();});
+
+/* ---------- Scroll cue: reliable smooth scroll to details ---------- */
+const cue=document.getElementById('scrollCue');
+if(cue){
+  cue.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.getElementById('date');
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
 </script>
 </body>
 </html>
